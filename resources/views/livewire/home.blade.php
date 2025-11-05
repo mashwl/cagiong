@@ -31,7 +31,7 @@
                 {{  'Sản Phẩm Nổi Bật' ?? $category->name}}
             </div>
 
-            <a href="{{ route('category.show', ['category' => $category->slug]) }}"
+            <a href="{{ $category ? route('category.show', ['category' => $category->slug]) : '#' }}"
                 class="btn text-white fw-semibold d-flex align-items-center justify-content-center px-4 py-2 mt-2 mt-md-0"
                 style="background: linear-gradient(90deg, #00897b, #004c73); border-radius: 25px;">
                 Xem thêm <i class="fas fa-chevron-right ms-2"></i>
@@ -43,7 +43,7 @@
             <div class="d-flex align-items-center px-4 py-2 text-white fw-bold text-uppercase"
                 style="background: linear-gradient(90deg, #003a60, #00897b); border-radius: 12px;">
                 <i class="fas fa-fish me-2 fs-5"></i>
-                {{ $category->name ?? 'Cá Giống Bán Chạy' }}
+                {{ 'Sản Phẩm Bán Chạy' ?? $category->name }}
             </div>
         </div>
 
@@ -71,7 +71,7 @@
 
         {{-- === NÚT XEM THÊM CHỈ DÀNH CHO MOBILE === --}}
         <div class="d-block d-md-none text-center mt-3">
-            <a href="{{ route('category.show', ['category' => $category->slug]) }}"
+            <a href="{{ $category ? route('category.show', ['category' => $category->slug]) : '#' }}"
                 class="btn text-white fw-semibold d-inline-flex align-items-center justify-content-center px-4 py-2"
                 style="background: linear-gradient(90deg, #00897b, #004c73); border-radius: 25px;">
                 Xem thêm <i class="fas fa-chevron-right ms-2"></i>
@@ -162,7 +162,7 @@
                     <h5 class="sub-title pe-3">Giới thiệu</h5>
                     <h1 class="display-5 mb-4">Hành trình hơn 20 năm cung cấp các loại cá giống</h1>
                     <p class="mb-4">Hành trình hơn 20 năm cung cấp các loại cá giống đủ tiêu chuẩn,
-                        {{ $setting->title }} đồng hành và gắn bó với nhiều thế hệ bà con miền Bắc đang làm nghề nuôi
+                        {{ $setting->title ?? 'Cá Giống Linh Nam' }} đồng hành và gắn bó với nhiều thế hệ bà con miền Bắc đang làm nghề nuôi
                         cá….</p>
                     <div class="row gy-4 align-items-center">
                         <div class="col-4 col-md-3">
