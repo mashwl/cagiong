@@ -2,12 +2,23 @@
 
 namespace App\Livewire\Components;
 
+use App\Models\Product;
 use Livewire\Component;
 
 class Floatbutton extends Component
 {
-    public function render()
+    public $products;
+
+    public function mount()
     {
-        return view('livewire.components.floatbutton');
+        $this->products = Product::all();
+    }
+
+    public function render()
+    
+    {
+        return view('livewire.components.floatbutton', [
+            'products' => $this->products,
+        ]);
     }
 }

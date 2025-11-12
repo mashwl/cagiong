@@ -4,19 +4,21 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Seeding;
+use Firefly\FilamentBlog\Models\Post;
+use Firefly\FilamentBlog\Models\Setting;
 use GuzzleHttp\Promise\Create;
 use Livewire\Component;
 
 class Home extends Component
 {
-    // public function render()
-    // {
-    //     return view('livewire.home');
-    // }
+
 
     public function render()
-{
-        $category = Category::withCount('products')
+{   $posts=Post::all();
+    $seedings=Seeding::all();
+    $setting=Setting::first();
+    $category = Category::withCount('products')
         ->orderBy('products_count', 'desc')
         ->first();
 
@@ -29,7 +31,10 @@ class Home extends Component
 
     return view('livewire.home', [
         'products' => $products,
-        'category' => $category, // để truyền ra view
+        'category' => $category,
+        'seedings' => $seedings,
+        'posts' => $posts,
+        'setting' => $setting,
 
     ]);
 }

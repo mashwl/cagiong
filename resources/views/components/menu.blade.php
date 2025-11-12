@@ -16,23 +16,21 @@
             </span>
 
 
-  <form action="{{ route('filamentblog.post.search') }}" method="GET"
-    class="hidden md:flex items-center flex-1 max-w-md bg-white border border-gray-300 rounded-full px-3 py-1 shadow-sm mx-4">
-    
-    <input type="text" name="query" placeholder="Nhập tên loại cá cần tìm ?"
-        class="flex-1 text-sm text-gray-700 placeholder-gray-400 focus:outline-none bg-transparent pl-2 py-2 rounded-full">
-    
-    <button type="submit"
-        class="flex items-center justify-center bg-cyan-700 hover:bg-cyan-800 text-white rounded-full w-9 h-9 ml-1 transition">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M21 21l-5.2-5.2m0 0a7 7 0 10-9.9 0 7 7 0 009.9 0z" />
-        </svg>
-    </button>
-</form>
+            <form action="{{ route('filamentblog.post.search') }}" method="GET"
+                class="hidden md:flex items-center flex-1 max-w-md bg-white border border-gray-300 rounded-full px-3 py-1 shadow-sm mx-4">
 
+                <input type="text" name="query" placeholder="Nhập tên loại cá cần tìm ?"
+                    class="flex-1 text-sm text-gray-700 placeholder-gray-400 focus:outline-none bg-transparent pl-2 py-2 rounded-full">
 
+                <button type="submit"
+                    class="flex items-center justify-center bg-cyan-700 hover:bg-cyan-800 text-white rounded-full w-9 h-9 ml-1 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 21l-5.2-5.2m0 0a7 7 0 10-9.9 0 7 7 0 009.9 0z" />
+                    </svg>
+                </button>
+            </form>
             <div
                 class="hidden md:flex items-center space-x-2 border border-gray-300 rounded-full px-4 py-2 bg-white shadow-sm whitespace-nowrap text-sm md:text-base">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 text-cyan-800" fill="none"
@@ -175,15 +173,15 @@
             class="bg-gradient-to-r from-cyan-900 to-teal-700 text-white text-sm font-semibold uppercase tracking-wide">
             <div class="max-w-7xl mx-auto px-4">
                 <ul class="hidden lg:flex items-center justify-end py-2 space-x-7">
-                    <li><a wire:navigate href="{{ route('home') }}" class="hover:text-yellow-300 transition">Trang chủ</a></li>
-                    {{-- <li><a href="#" class="hover:text-yellow-300 transition">Giới thiệu</a></li> --}}
+                    <li><a wire:navigate href="{{ route('home') }}" class="hover:text-yellow-300 transition">Trang
+                            chủ</a></li>
 
                     {{-- ====================== SẢN PHẨM CÁ GIỐNG ====================== --}}
                     <li x-data="{ open: false, activeCategory: 0, loaded: {} }" class="relative group flex-shrink-0"
                         @mouseenter="
-                            open = true;
+                             open = true;
                             if (!loaded[0]) loaded[0] = true;
-                        "
+                         "
                         @mouseleave="open = false" x-cloak>
 
                         <button class="flex items-center uppercase font-semibold hover:text-yellow-300 transition">
@@ -212,17 +210,17 @@
                                     class="w-full md:w-60 bg-gray-50 p-3 border-b md:border-b-0 md:border-r border-gray-200">
                                     @foreach ($product_categories as $index => $category)
                                         <li>
-                                            <button
+                                            <a href="{{ route('category.show', ['category' => $category->slug]) }}"
                                                 @mouseenter="
                                 activeCategory = {{ $index }};
                                 if (!loaded[{{ $index }}]) loaded[{{ $index }}] = true;
                             "
-                                                class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-teal-600 hover:to-cyan-600 hover:text-white rounded-lg transition"
+                                                class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-teal-600 hover:to-cyan-600 hover:text-white transition"
                                                 :class="activeCategory === {{ $index }} ?
                                                     'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-sm' :
                                                     ''">
                                                 {{ $category->name }}
-                                            </button>
+                                            </a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -244,7 +242,9 @@
                                                     <a href="{{ route('product.show', ['category' => $category->slug, 'product' => $product->slug]) }}"
                                                         class="group block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 border border-gray-100 hover:border-teal-200 hover:-translate-y-1">
                                                         @php
-                                                            $mainImage = $product->images->first()?->image_path;
+                                                            $mainImage =
+                                                                $product->images->first()?->image_path ??
+                                                                'images/default.jpg';
                                                         @endphp
                                                         <div class="relative h-36 sm:h-32 overflow-hidden">
                                                             <img src="{{ asset('storage/' . $mainImage) }}"
@@ -266,30 +266,110 @@
                                                     </p>
                                                 @endforelse
                                             </div>
-
-                                            {{-- Nút xem thêm --}}
-                                            @if ($category->products->count() > 0)
-                                                <div class="text-center">
-                                                    <a href="{{ route('category.show', ['category' => $category->slug]) }}"
-                                                        class="inline-flex items-center gap-2 px-5 py-2.5 text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-teal-600 to-teal-500 rounded-full shadow-md hover:from-teal-700 hover:to-teal-600 transition duration-300">
-                                                        Xem thêm sản phẩm khác
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
-                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2" d="M9 5l7 7-7 7" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            @endif
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
                         </div>
                     </li>
+                    {{-- ====================== SẢN PHẨM PHỤ ====================== --}}
+                    <li x-data="{ open: false, activeCategory: 0, loaded: {} }" class="relative group flex-shrink-0"
+                        @mouseenter="
+                             open = true;
+                         if (!loaded[0]) loaded[0] = true;
+                            "
+                        @mouseleave="open = false" x-cloak>
 
+                        {{-- Nút chính --}}
+                        <button class="flex items-center uppercase font-semibold hover:text-yellow-300 transition">
+                            Sản phẩm phụ
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="ml-1 w-4 h-4 transition duration-200 group-hover:text-yellow-300"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
 
+                        {{-- === Mega Menu === --}}
+                        <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 translate-y-2"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-2"
+                            class="absolute left-1/2 top-full mt-3 w-[900px] -translate-x-1/2 bg-white text-gray-800 rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden"
+                            @mouseenter="open = true" @mouseleave="open = false">
 
+                            <div class="flex flex-col md:flex-row">
+                                {{-- ==== DANH MỤC BÊN TRÁI ==== --}}
+                                <ul
+                                    class="w-full md:w-60 bg-gray-50 p-3 border-b md:border-b-0 md:border-r border-gray-200">
+                                    @foreach ($sppCategories as $index => $sppCategory)
+                                        <li>
+                                            {{-- Khi hover đổi danh mục, khi click đi đến trang danh mục --}}
+                                            <a href="{{ route('sppcategory.show', ['sppCategory' => $sppCategory->slug]) }}"
+                                                @mouseenter="
+                            activeCategory = {{ $index }};
+                            if (!loaded[{{ $index }}]) loaded[{{ $index }}] = true;
+                        "
+                                                class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-teal-600 hover:to-cyan-600 hover:text-white transition"
+                                                :class="activeCategory === {{ $index }} ?
+                                                    'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-sm' :
+                                                    ''">
+                                                {{ $sppCategory->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                                {{-- ==== DANH SÁCH SẢN PHẨM ==== --}}
+                                <div class="flex-1 p-4 bg-white">
+                                    @foreach ($sppCategories as $index => $sppCategory)
+                                        <div x-show="loaded[{{ $index }}]" x-cloak
+                                            :class="activeCategory === {{ $index }} ? 'block' : 'hidden'"
+                                            x-transition:enter="transition ease-out duration-200"
+                                            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                            x-transition:leave="transition ease-in duration-100"
+                                            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                            class="space-y-8">
+
+                                            {{-- Lưới sản phẩm --}}
+                                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-3">
+                                                @forelse ($sppCategory->sanphamphus->take(4) as $spp)
+                                                    <a href="{{ route('spp.show', ['sppCategory' => $sppCategory->slug, 'sanphamphu' => $spp->slug]) }}"
+                                                        class="group block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 border border-gray-100 hover:border-teal-200 hover:-translate-y-1">
+                                                        @php
+                                                            $mainImage =
+                                                                $spp->hinhanhs->first()?->image_path ??
+                                                                'images/default.jpg';
+                                                        @endphp
+                                                        <div class="relative h-36 sm:h-32 overflow-hidden">
+                                                            <img src="{{ asset('storage/' . $mainImage) }}"
+                                                                alt="{{ $spp->title }}"
+                                                                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:brightness-105">
+                                                            <div
+                                                                class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                                            </div>
+                                                        </div>
+                                                        <div class="p-1 text-center">
+                                                            <h3
+                                                                class="text-sm sm:text-base font-semibold text-gray-800 line-clamp-2 group-hover:text-teal-700 transition-colors">
+                                                                {{ $spp->title }}
+                                                            </h3>
+                                                        </div>
+                                                    </a>
+                                                @empty
+                                                    <p class="text-gray-500 col-span-full text-center">Chưa có sản phẩm
+                                                    </p>
+                                                @endforelse
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                     {{-- ====================== KỸ THUẬT NUÔI ====================== --}}
                     <li x-data="{ open: false }" class="relative group" x-cloak>
                         <button @mouseenter="open = true" @mouseleave="open = false"
@@ -316,7 +396,6 @@
                     </li>
 
                     {{-- ====================== MỤC KHÁC ====================== --}}
-                    <li><a href="#" class="hover:text-yellow-300 transition">Bảng giá</a></li>
                     <li><a href="#" class="hover:text-yellow-300 transition">Liên hệ</a></li>
                 </ul>
 
@@ -334,6 +413,7 @@
                     <div x-show="open" x-cloak x-transition class="py-3 space-y-2 bg-cyan-900 rounded-b-lg">
                         <a href="/" class="block px-4 py-2 hover:bg-cyan-800 rounded">Trang chủ</a>
 
+                        {{-- Sản phẩm cá giống --}}
                         <div x-data="{ openSub: false }" class="px-4" x-cloak>
                             <button @click="openSub = !openSub"
                                 class="flex justify-between uppercase w-full py-2 hover:bg-cyan-800 rounded">
@@ -354,8 +434,27 @@
                             </div>
                         </div>
 
-                        <a href="#" class="block px-4 py-2 hover:bg-cyan-800 rounded">Bảng giá</a>
-
+                        {{-- Sản phẩm phụ --}}
+                        <div x-data="{ openSpp: false }" class="px-4" x-cloak>
+                            <button @click="openSpp = !openSpp"
+                                class="flex justify-between uppercase w-full py-2 hover:bg-cyan-800 rounded">
+                                <span>Sản phẩm phụ</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mt-1" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div x-show="openSpp" x-transition class="pl-4 space-y-1" x-cloak>
+                                @foreach ($sppCategories as $sppCategory)
+                                    <a href="{{ route('sppcategory.show', ['sppCategory' => $sppCategory->slug]) }}"
+                                        class="block py-1 text-sm text-gray-100 hover:text-yellow-300">
+                                        {{ $sppCategory->name }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                        {{-- kỹ thuật nuôi --}}
                         <div x-data="{ openTech: false }" class="px-4" x-cloak>
                             <button @click="openTech = !openTech"
                                 class="flex justify-between uppercase w-full py-2 hover:bg-cyan-800 rounded">
@@ -379,6 +478,7 @@
                         <a href="#" class="block px-4 py-2 hover:bg-cyan-800 rounded">Liên hệ</a>
                     </div>
                 </div>
+
             </div>
         </nav>
 

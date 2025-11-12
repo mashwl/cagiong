@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('f_a_q_s', function (Blueprint $table) {
+        Schema::create('spp_sppcategory', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
-            $table->text('answer');
-            $table->foreignId('page_id')->nullable()->constrained('pages')->onDelete('cascade');
+            $table->foreignId('sanphamphu_id')->constrained('sanphamphus')->cascadeOnDelete();
+            $table->foreignId('spp_category_id')->constrained('spp_categories')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('f_a_q_s');
+        Schema::dropIfExists('spp_sppcategory');
     }
 };

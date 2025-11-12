@@ -1,38 +1,39 @@
 <?php
 
 namespace App\Filament\Resources;
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Models\Category as ModelsCategory;
+
+use App\Filament\Resources\SppCategoryResource\Pages;
+use App\Filament\Resources\SppCategoryResource\RelationManagers;
+use App\Models\SppCategory;
+use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CategoryResource extends Resource
+class SppCategoryResource extends Resource
 {
-    protected static ?string $model = ModelsCategory::class;
-    protected static ?string $navigationGroup = 'Sản Phẩm';
-    protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
-    protected static ?int $navigationSort = 1;
-    public static function getSlug(): string
-    {
-        return 'danh-muc-ca-giong';
-    }
+    protected static ?string $model = SppCategory::class;
 
-    protected static ?string $modelLabel = 'danh mục cá giống';
+    protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
+    protected static ?string $navigationGroup = 'Sản Phẩm';
+        public static function getSlug(): string
+    {
+        return 'danh-muc-san-pham-phu';
+    }
+    protected static ?string $modelLabel = 'danh mục sản phẩm phụ';
     public static function getNavigationBadge(): ?string
     {
-        return strval(ModelsCategory::count());
+        return strval(SppCategory::count());
     }
-
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema(ModelsCategory::getForm());
+            ->schema(
+                SppCategory::getForm());
     }
 
     public static function table(Table $table): Table
@@ -42,10 +43,10 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên danh mục')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('products_count')
+                Tables\Columns\TextColumn::make('sanphamphus_count')
                     ->label('Số sản phẩm')
                     ->badge()
-                    ->counts('products'),
+                    ->counts('sanphamphus'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -60,8 +61,6 @@ class CategoryResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -70,24 +69,19 @@ class CategoryResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function getRelations(): array
     {
-        return $infolist->schema([
-            Section::make('Category')
-                ->schema([
-                    TextEntry::make('name'),
-                    TextEntry::make('slug'),
-                ])->columns(2)
-                ->icon('heroicon-o-square-3-stack-3d'),
-        ]);
+        return [
+            //
+        ];
     }
-
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListSppCategories::route('/'),
+            'create' => Pages\CreateSppCategory::route('/create'),
+            'edit' => Pages\EditSppCategory::route('/{record}/edit'),
         ];
     }
 }

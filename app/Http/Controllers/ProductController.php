@@ -12,18 +12,18 @@ use App\Models\Category;
 
 class ProductController extends Controller
 {
-    public function allProducts()
-    {
-        SEOMeta::setTitle('Tất cả sản phẩm | '.config('app.name')) ;
+    // public function allProducts()
+    // {
+    //     SEOMeta::setTitle('Tất cả sản phẩm | '.config('app.name')) ;
 
-        $products = Product::query()->with(['categories', 'user'])
-            ->published()
-            ->paginate(20);
+    //     $products = Product::query()->with(['categories', 'user'])
+    //         ->published()
+    //         ->paginate(20);
 
-        return view('livewire.product-page', [
-            'products' => $products,
-        ]);
-    }
+    //     return view('livewire.product-page', [
+    //         'products' => $products,
+    //     ]);
+    // }
 
     public function search(Request $request)
     {

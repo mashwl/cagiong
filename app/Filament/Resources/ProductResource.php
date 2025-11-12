@@ -30,18 +30,18 @@ class ProductResource extends Resource
 
     public static function getSlug(): string
     {
-        return 'san-pham';
+        return 'ca-giong';
     }
     public static function getBreadcrumb(): string
     {
-        return 'Sản phẩm - Con giống ';
+        return ' Cá giống ';
     }
     public static function getNavigationBadge(): ?string
     {
         return strval(Product::count());
     }
 
-    protected static ?string $modelLabel = 'sản phẩm - con giống';
+    protected static ?string $modelLabel = 'Cá giống';
     public static function form(Form $form): Form
     {
         return $form

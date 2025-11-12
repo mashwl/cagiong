@@ -1,19 +1,50 @@
-@props(['product'])
+@props(['product', 'type' => 'product'])
 
-<a
-    href="{{ route('product.show', [
-        'category' => $product->categories->first()?->slug ?? 'khong-xac-dinh',
-        'product' => $product->slug,
-    ]) }}">
-    @php
-        // Lấy ảnh đầu tiên trong danh sách ảnh (ảnh đại diện)
-        $mainImage = $product->images->first()?->image_path;
-    @endphp
+@php
+    // Lấy slug danh mục phù hợp
+    $categorySlug = 'khong-xac-dinh';
+    if ($type === 'product' && $product->categories) {
+        $categorySlug = optional($product->categories->first())->slug ?? 'khong-xac-dinh';
+    } elseif ($type === 'spp' && $product->danhmuc) {
+        $categorySlug = optional($product->danhmuc->first())->slug ?? 'khong-xac-dinh';
+    }
+
+    // Xác định route hiển thị chi tiết
+    $link =
+        $type === 'product'
+            ? route('product.show', [
+                'category' => $categorySlug,
+                'product' => $product->slug,
+            ])
+            : route('spp.show', [
+                'sppCategory' => $categorySlug,
+                'sanphamphu' => $product->slug,
+            ]);
+
+    // Ảnh đại diện
+    $mainImage =
+        $type === 'product'
+            ? optional($product->images->first())->image_path
+            : optional($product->hinhanhs->first())->image_path;
+
+    // Giá sản phẩm
+    $price = $product->price ?? null;
+    $priceMin = $product->price_min ?? null;
+    $priceMax = $product->price_max ?? null;
+@endphp
+
+<a href="{{ $link }}">
     <div class="group/blog-item flex flex-col items-center gap-y-4">
-        {{-- Ảnh sản phẩm với hiệu ứng tráng gương --}}
+        {{-- Ảnh sản phẩm --}}
         <div class="relative h-[220px] sm:h-[250px] w-full rounded-xl bg-zinc-200 overflow-hidden shadow-md">
-            <img class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover/blog-item:scale-105"
-                src="{{ asset('storage/' . $mainImage) }}" alt="{{ $product->photo_alt_text }}">
+            @if ($mainImage)
+                <img class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover/blog-item:scale-105"
+                    src="{{ asset('storage/' . $mainImage) }}" alt="{{ $product->photo_alt_text ?? $product->title }}">
+            @else
+                <div class="h-full w-full bg-gray-300 flex items-center justify-center text-gray-500">
+                    Không có hình ảnh
+                </div>
+            @endif
 
             {{-- Hiệu ứng tráng gương --}}
             <div
@@ -28,11 +59,11 @@
                 {{ $product->title }}
             </h2>
             <span class="text-secondary-600 text-lg sm:text-xl font-bold">
-                @if (!empty($product->price_min) && !empty($product->price_max))
-                    {{ number_format($product->price_min, 0, ',', '.') }}đ -
-                    {{ number_format($product->price_max, 0, ',', '.') }}đ
-                @elseif(!empty($product->price))
-                    {{ number_format($product->price, 0, ',', '.') }}đ
+                @if ($priceMin && $priceMax)
+                    {{ number_format($priceMin, 0, ',', '.') }}đ -
+                    {{ number_format($priceMax, 0, ',', '.') }}đ
+                @elseif($price)
+                    {{ number_format($price, 0, ',', '.') }}đ
                 @else
                     <span class="text-gray-500 text-base font-normal">đang cập nhật</span>
                 @endif

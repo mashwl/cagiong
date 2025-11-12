@@ -4,28 +4,29 @@ namespace App\Models;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Filament\Forms\Set;
 use Illuminate\Support\Str;
 
+class SppCategory extends Model
 
-class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'slug'];
-   protected $casts = [
+    protected $fillable = [
+        'name',
+        'slug',
+    ];
+    
+       protected $casts = [
         'id' => 'integer',
     ];
-    public function getRouteKeyName()
-{
-    return 'slug';
-}
 
-    public function products(): BelongsToMany
+    
+    public function sanphamphus(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'product_category');
+        return $this->belongsToMany(Sanphamphu::class, 'spp_sppcategory');
     }
 
     public static function getForm()
@@ -64,3 +65,5 @@ class Category extends Model
         });
     }
 }
+
+
