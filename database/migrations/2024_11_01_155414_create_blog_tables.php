@@ -57,13 +57,17 @@ return new class () extends Migration {
                 ->constrained(table: config('filamentblog.tables.prefix').'posts')
                 ->cascadeOnDelete();
             $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('sanphamphu_id')->nullable();
             $table->string('title');
             $table->json('keywords')->nullable();
             $table->text('description');
             $table->timestamps();
                if (Schema::hasTable('products')) {
-        $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
-    }
+            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+            }
+            if (Schema::hasTable('sanphamphus')) {
+                $table->foreign('sanphamphu_id')->references('id')->on('sanphamphus')->cascadeOnDelete();
+            }
         });
 
         Schema::create(config('filamentblog.tables.prefix').'comments', function (Blueprint $table) {

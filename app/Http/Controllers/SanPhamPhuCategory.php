@@ -10,11 +10,11 @@ class SanPhamPhuCategory extends Controller
 {
     public function posts(Request $request, SppCategory $sppCategory)
     {
-        // SEOMeta::setTitle($sppCategory?->name ?? 'Trang Chủ');
+        SEOMeta::setTitle($sppCategory?->name ?? 'Trang Chủ');
 
-        // $sanphamphus = $sppCategory->load(['sanphamphus.user', 'sanphamphus.danhmuc'])
-        //     ->sanphamphus()
-        //     ->paginate(25);
+        $sanphamphus = $sppCategory->load(['sanphamphus.user', 'sanphamphus.danhmuc'])
+            ->sanphamphus()
+            ->paginate(25);
             $sanphamphus = $sppCategory->sanphamphus()->paginate(25);
 
 

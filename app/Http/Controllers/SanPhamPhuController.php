@@ -46,11 +46,11 @@ class SanPhamPhuController extends Controller
         if (!$sanphamphu->danhmuc->contains('id', $sppCategory->id)) {
             abort(404);
         }
-        // SEOMeta::setTitle(($sanphamphu->seoDetail?->title ?? $sanphamphu->title));
+        SEOMeta::setTitle(($sanphamphu->seoDetail?->title ?? $sanphamphu->title));
 
-        // SEOMeta::setDescription($sanphamphu->seoDetail?->description);
+        SEOMeta::setDescription($sanphamphu->seoDetail?->description);
 
-        // SEOMeta::setKeywords($sanphamphu->seoDetail->keywords ?? []);
+        SEOMeta::setKeywords($sanphamphu->seoDetail->keywords ?? []);
 
         $shareButton = ShareSnippet::query()->active()->first();
         // $sanphamphu->load(['user', 'categories' => fn ($query) => $query->approved(), 'comments.user']);

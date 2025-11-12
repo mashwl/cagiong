@@ -19,74 +19,74 @@
     </div>
     <!-- Banner End -->
     <!-- Products Start -->
-  
-<div class="container-fluid country overflow-hidden py-5">
-    <div class="container">
 
-        {{-- === HEADER: Desktop & Tablet === --}}
-        <div class="d-none d-md-flex justify-content-between align-items-center flex-wrap mb-3 text-center text-md-start">
-            <div class="d-flex align-items-center px-4 py-2 text-white fw-bold text-uppercase"
-                style="background: linear-gradient(90deg, #003a60, #00897b); border-radius: 12px;">
-                <i class="fas fa-fish me-2 fs-5"></i>
-                {{  'Sản Phẩm Nổi Bật' ?? $category->name}}
+    <div class="container-fluid country overflow-hidden py-5">
+        <div class="container">
+
+            {{-- === HEADER: Desktop & Tablet === --}}
+            <div
+                class="d-none d-md-flex justify-content-between align-items-center flex-wrap mb-3 text-center text-md-start">
+                <div class="d-flex align-items-center px-4 py-2 text-white fw-bold text-uppercase"
+                    style="background: linear-gradient(90deg, #003a60, #00897b); border-radius: 12px;">
+                    <i class="fas fa-fish me-2 fs-5"></i>
+                    {{ 'Sản Phẩm Nổi Bật' ?? $category->name }}
+                </div>
+
+                <a href="{{ $category ? route('category.show', ['category' => $category->slug]) : '#' }}"
+                    class="btn text-white fw-semibold d-flex align-items-center justify-content-center px-4 py-2 mt-2 mt-md-0"
+                    style="background: linear-gradient(90deg, #00897b, #004c73); border-radius: 25px;">
+                    Xem thêm <i class="fas fa-chevron-right ms-2"></i>
+                </a>
             </div>
 
-            <a href="{{ $category ? route('category.show', ['category' => $category->slug]) : '#' }}"
-                class="btn text-white fw-semibold d-flex align-items-center justify-content-center px-4 py-2 mt-2 mt-md-0"
-                style="background: linear-gradient(90deg, #00897b, #004c73); border-radius: 25px;">
-                Xem thêm <i class="fas fa-chevron-right ms-2"></i>
-            </a>
-        </div>
-
-        {{-- === HEADER CHO MOBILE === --}}
-        <div class="d-flex d-md-none justify-content-center mb-3">
-            <div class="d-flex align-items-center px-4 py-2 text-white fw-bold text-uppercase"
-                style="background: linear-gradient(90deg, #003a60, #00897b); border-radius: 12px;">
-                <i class="fas fa-fish me-2 fs-5"></i>
-                {{ 'Sản Phẩm Bán Chạy' ?? $category->name }}
+            {{-- === HEADER CHO MOBILE === --}}
+            <div class="d-flex d-md-none justify-content-center mb-3">
+                <div class="d-flex align-items-center px-4 py-2 text-white fw-bold text-uppercase"
+                    style="background: linear-gradient(90deg, #003a60, #00897b); border-radius: 12px;">
+                    <i class="fas fa-fish me-2 fs-5"></i>
+                    {{ 'Sản Phẩm Bán Chạy' ?? $category->name }}
+                </div>
             </div>
-        </div>
 
-        {{-- === SẢN PHẨM === --}}
-        <div class="row g-4 text-center">
-            @foreach ($products->sortByDesc('published_at') as $product)
-                <div class="col-6 col-md-4 col-xl-3 mb-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="country-item">
-                        @php
-                            $image = $product->featuredImage->image_path ?? ($product->images->first()->image_path ?? null);
-                        @endphp
-                        <div class="rounded overflow-hidden" style="height: 220px;">
-                            <img src="{{ Storage::url($image) }}" class="w-auto h-100 object-fit-contain rounded"
-                                alt="{{ $product->title }}">
-                        </div>
+            {{-- === SẢN PHẨM === --}}
+            <div class="row g-4 text-center">
+                @foreach ($products->sortByDesc('published_at') as $product)
+                    <div class="col-6 col-md-4 col-xl-3 mb-4 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="country-item">
+                            @php
+                                $image =
+                                    $product->featuredImage->image_path ??
+                                    ($product->images->first()->image_path ?? null);
+                            @endphp
+                            <div class="rounded overflow-hidden" style="height: 220px;">
+                                <img src="{{ Storage::url($image) }}" class="w-auto h-100 object-fit-contain rounded"
+                                    alt="{{ $product->title }}">
+                            </div>
 
-                        <div class="country-name mt-2">
-                            <a href="{{ route('product.show', ['category' => $category->slug, 'product' => $product->slug]) }}" class="text-white fs-5">{{ $product->title }}</a>
+                            <div class="country-name mt-2">
+                                <a href="{{ route('product.show', ['category' => $category->slug, 'product' => $product->slug]) }}"
+                                    class="text-white fs-5">{{ $product->title }}</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
+
+
+            {{-- === NÚT XEM THÊM CHỈ DÀNH CHO MOBILE === --}}
+            <div class="d-block d-md-none text-center mt-3">
+                <a href="{{ $category ? route('category.show', ['category' => $category->slug]) : '#' }}"
+                    class="btn text-white fw-semibold d-inline-flex align-items-center justify-content-center px-4 py-2"
+                    style="background: linear-gradient(90deg, #00897b, #004c73); border-radius: 25px;">
+                    Xem thêm <i class="fas fa-chevron-right ms-2"></i>
+                </a>
+            </div>
+
         </div>
-
-
-        {{-- === NÚT XEM THÊM CHỈ DÀNH CHO MOBILE === --}}
-        <div class="d-block d-md-none text-center mt-3">
-            <a href="{{ $category ? route('category.show', ['category' => $category->slug]) : '#' }}"
-                class="btn text-white fw-semibold d-inline-flex align-items-center justify-content-center px-4 py-2"
-                style="background: linear-gradient(90deg, #00897b, #004c73); border-radius: 25px;">
-                Xem thêm <i class="fas fa-chevron-right ms-2"></i>
-            </a>
-        </div>
-
     </div>
-</div>
-
-
-
-
     <!-- Products End -->
     <!-- Features Start -->
-    <div class="container-fluid features overflow-hidden py-5">
+    {{-- <div class="container-fluid features overflow-hidden py-5">
         <div class="container">
             <div class="section-title text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="sub-style">
@@ -143,7 +143,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Features End -->
     <!-- About Start -->
     <div class="container-fluid py-5">
@@ -162,7 +162,8 @@
                     <h5 class="sub-title pe-3">Giới thiệu</h5>
                     <h1 class="display-5 mb-4">Hành trình hơn 20 năm cung cấp các loại cá giống</h1>
                     <p class="mb-4">Hành trình hơn 20 năm cung cấp các loại cá giống đủ tiêu chuẩn,
-                        {{ $setting->title ?? 'Cá Giống Linh Nam' }} đồng hành và gắn bó với nhiều thế hệ bà con miền Bắc đang làm nghề nuôi
+                        {{ $setting->title ?? 'Cá Giống Linh Nam' }} đồng hành và gắn bó với nhiều thế hệ bà con miền
+                        Bắc đang làm nghề nuôi
                         cá….</p>
                     <div class="row gy-4 align-items-center">
                         <div class="col-4 col-md-3">

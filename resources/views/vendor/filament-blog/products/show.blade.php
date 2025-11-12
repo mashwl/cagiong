@@ -55,14 +55,16 @@
             {{-- 🧱 Layout 2 cột --}}
             <div class="grid lg:grid-cols-2 gap-8 md:gap-10 items-start">
 
+
                 {{-- 🎨 Hình ảnh sản phẩm --}}
                 <div x-data="{ mainImage: '{{ $product->sorted_images->first()?->image_path }}' }" class="space-y-3">
                     @if ($product->sorted_images->count())
-                        {{-- Ảnh chính --}}
-                        <div class="relative overflow-hidden rounded-2xl shadow-md">
+                        {{-- Ảnh chính (tỉ lệ 4:3, không crop) --}}
+                        <div
+                            class="relative overflow-hidden rounded-2xl shadow-md bg-gray-50 aspect-[4/3] flex items-center justify-center">
                             <img :src="'/storage/' + mainImage"
                                 alt="{{ $product->sorted_images->first()->photo_alt_text ?? $product->title }}"
-                                class="w-full h-72 sm:h-96 md:h-[500px] object-cover rounded-2xl transition-all duration-300"
+                                class="w-full h-full object-contain rounded-2xl transition-all duration-300 ease-in-out"
                                 x-transition>
                         </div>
 

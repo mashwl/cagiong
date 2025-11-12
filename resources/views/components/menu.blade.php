@@ -275,9 +275,9 @@
                     {{-- ====================== SẢN PHẨM PHỤ ====================== --}}
                     <li x-data="{ open: false, activeCategory: 0, loaded: {} }" class="relative group flex-shrink-0"
                         @mouseenter="
-                             open = true;
-                         if (!loaded[0]) loaded[0] = true;
-                            "
+                            open = true;
+                            if (!loaded[0]) loaded[0] = true;
+                        "
                         @mouseleave="open = false" x-cloak>
 
                         {{-- Nút chính --}}
@@ -298,21 +298,21 @@
                             x-transition:leave="transition ease-in duration-150"
                             x-transition:leave-start="opacity-100 translate-y-0"
                             x-transition:leave-end="opacity-0 translate-y-2"
-                            class="absolute left-1/2 top-full mt-3 w-[900px] -translate-x-1/2 bg-white text-gray-800 rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden"
+                            class="absolute left-1/3 top-full mt-3 max-w-[95vw] w-[900px] -translate-x-1/2 bg-white text-gray-800 rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden"
                             @mouseenter="open = true" @mouseleave="open = false">
 
                             <div class="flex flex-col md:flex-row">
                                 {{-- ==== DANH MỤC BÊN TRÁI ==== --}}
                                 <ul
-                                    class="w-full md:w-60 bg-gray-50 p-3 border-b md:border-b-0 md:border-r border-gray-200">
+                                    class="w-full md:w-60 bg-gray-50 p-3 border-b md:border-b-0 md:border-r border-gray-200 overflow-y-auto max-h-[70vh]">
                                     @foreach ($sppCategories as $index => $sppCategory)
                                         <li>
                                             {{-- Khi hover đổi danh mục, khi click đi đến trang danh mục --}}
                                             <a href="{{ route('sppcategory.show', ['sppCategory' => $sppCategory->slug]) }}"
                                                 @mouseenter="
-                            activeCategory = {{ $index }};
-                            if (!loaded[{{ $index }}]) loaded[{{ $index }}] = true;
-                        "
+                                activeCategory = {{ $index }};
+                                if (!loaded[{{ $index }}]) loaded[{{ $index }}] = true;
+                            "
                                                 class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-teal-600 hover:to-cyan-600 hover:text-white transition"
                                                 :class="activeCategory === {{ $index }} ?
                                                     'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-sm' :
@@ -324,7 +324,7 @@
                                 </ul>
 
                                 {{-- ==== DANH SÁCH SẢN PHẨM ==== --}}
-                                <div class="flex-1 p-4 bg-white">
+                                <div class="flex-1 p-4 bg-white overflow-y-auto max-h-[70vh]">
                                     @foreach ($sppCategories as $index => $sppCategory)
                                         <div x-show="loaded[{{ $index }}]" x-cloak
                                             :class="activeCategory === {{ $index }} ? 'block' : 'hidden'"
@@ -370,10 +370,13 @@
                             </div>
                         </div>
                     </li>
+
                     {{-- ====================== KỸ THUẬT NUÔI ====================== --}}
-                    <li x-data="{ open: false }" class="relative group" x-cloak>
-                        <button @mouseenter="open = true" @mouseleave="open = false"
-                            class="flex items-center uppercase font-semibold hover:text-yellow-300 transition">
+                    <li x-data="{ open: false }" class="relative group" x-cloak @mouseenter="open = true"
+                        @mouseleave="open = false">
+
+                        {{-- Nút chính --}}
+                        <button class="flex items-center uppercase font-semibold hover:text-yellow-300 transition">
                             Kỹ thuật nuôi
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 class="ml-1 w-4 h-4 transition-colors duration-200 group-hover:text-yellow-300"
@@ -383,18 +386,25 @@
                             </svg>
                         </button>
 
-                        <div x-show="open" @mouseenter="open = true" @mouseleave="open = false" x-cloak x-transition
-                            class="absolute left-0 mt-2 bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden z-50 inline-block min-w-max">
+                        {{-- Menu thả xuống --}}
+                        <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 translate-y-2"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-2"
+                            class="absolute left-1/2 -translate-x-1/2 mt-2 bg-white border border-gray-200 
+                        rounded-2xl shadow-lg overflow-hidden z-50 min-w-max max-w-[95vw]">
+
                             @foreach ($categories as $category)
                                 <a href="{{ route('filamentblog.category.post', ['category' => $category->slug]) }}"
                                     class="block px-5 py-2.5 text-sm text-gray-700 font-medium capitalize transition-all duration-200 
-                            hover:bg-gradient-to-r hover:from-teal-500 hover:to-cyan-600 hover:text-white rounded-lg mx-2 mt-1 whitespace-nowrap">
+                      hover:bg-gradient-to-r hover:from-teal-500 hover:to-cyan-600 hover:text-white rounded-lg mx-2 mt-1 whitespace-nowrap">
                                     {{ $category->name }}
                                 </a>
                             @endforeach
                         </div>
                     </li>
-
                     {{-- ====================== MỤC KHÁC ====================== --}}
                     <li><a href="#" class="hover:text-yellow-300 transition">Liên hệ</a></li>
                 </ul>
