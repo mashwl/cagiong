@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -72,6 +73,10 @@ use HasFactory;
        public function categories()
     {
         return $this->belongsToMany(Category::class, 'product_category');
+    }
+    public function featuredProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(FeaturedProduct::class, 'featured_product_sanphamphu', 'sanphamphu_id', 'featured_product_id');
     }
 
     public function user(): BelongsTo
@@ -198,8 +203,8 @@ use HasFactory;
                         ->extraInputAttributes(['style' => 'max-height: 30rem; min-height: 24rem'])
                         ->required()
                         ->columnSpanFull(),
- Fieldset::make('Hình ảnh sản phẩm')
-    ->schema([
+     Fieldset::make('Hình ảnh sản phẩm')
+        ->schema([
 
         Repeater::make('images')
             ->label('')
@@ -230,8 +235,8 @@ use HasFactory;
             ->reorderableWithDragAndDrop()
             ->addActionLabel('Thêm ảnh mới'),
 
-    ])
-    ->columns(1),
+     ])
+        ->columns(1),
 
 
 

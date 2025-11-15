@@ -30,6 +30,7 @@ class Order extends Model
         'total',
         'status',
         'subscribe',
+        'sanphamphu_id',
     ];
 
     /**
@@ -63,5 +64,9 @@ class Order extends Model
     public function product()
     {
         return $this->belongsTo(\App\Models\Product::class);
+    }
+    public function sanphamphu()
+    {
+        return $this->belongsTo(\App\Models\Sanphamphu::class);
     }
 }

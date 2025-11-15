@@ -2,8 +2,10 @@
 
 namespace App\Observers;
 
+use App\Filament\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\User;
+use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 
 class OrderObserver
@@ -22,6 +24,10 @@ class OrderObserver
             "Mã đơn hàng: #{$order->id}"
 )
             ->success()
+            ->actions([
+                Action::make('Xem đơn hàng')
+                    ->url(OrderResource::getUrl('edit', ['record' => $order])),
+            ])
             ->sendToDatabase($user);
     }
 

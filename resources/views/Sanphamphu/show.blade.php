@@ -5,6 +5,7 @@
         $formattedPhone = preg_replace('/^0/', '+84 ', $phone);
         $formattedPhone = preg_replace('/(\d{3})(\d{3})(\d+)/', '$1 $2 $3', $formattedPhone);
     @endphp
+
     <style>
         [x-cloak] {
             display: none !important;
@@ -32,7 +33,8 @@
             }
         }
     </style>
-    <section x-data="{ tab: 'info', openOrderForm: false, mainImage: '{{ $sanphamphu->hinhanhs->first()->image_path ?? '' }}' }" class="pb-16" x-cloak>
+
+    <section x-data="{ tab: 'info', openOrderForm: false, mainImage: '{{ $sanphamphu->sorted_images->first()?->image_path ?? '' }}' }" class="pb-16" x-cloak>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
 
             @if (session('success'))
@@ -42,8 +44,8 @@
                 </div>
             @endif
 
-            <nav class="mb-6 sm:mb-10 flex flex-wrap items-center gap-1 text-sm font-medium text-gray-600">
-                <a href="{{ url('/') }}" class="hover:text-primary-600">Trang chủ</a>
+            <nav class="mb-6 pt-3 sm:mb-10 flex flex-wrap items-center gap-1 text-lg font-medium text-gray-600">
+                <a href="{{ url('/') }}" class="hover:text-primary-600">Trang Chủ</a>
                 <span class="opacity-30">/</span>
                 <a href="{{ route('sppcategory.show', ['sppCategory' => $sppCategory->slug]) }}"
                     class="hover:text-primary-600">
@@ -53,27 +55,27 @@
                 <span class="text-primary-600 line-clamp-1">{{ $sanphamphu->title }}</span>
             </nav>
 
-            {{-- 🧱 Layout 2 cột --}}
+            {{-- Layout 2 cột --}}
             <div class="grid lg:grid-cols-2 gap-8 md:gap-10 items-start">
 
-                {{-- 🎨 Hình ảnh sản phẩm --}}
-                <div x-data="{ mainImage: '{{ $sanphamphu->sorted_images->first()?->image_path }}' }" class="space-y-3">
+                {{-- Hình ảnh sản phẩm --}}
+                <div x-data="{ mainImage: '{{ $sanphamphu->sorted_images->first()?->image_path ?? '' }}' }" class="space-y-3">
                     @if ($sanphamphu->sorted_images->count())
                         {{-- Ảnh chính --}}
-                        <div class="relative overflow-hidden rounded-2xl shadow-md">
-                            <img :src="'/storage/' + mainImage"
-                                alt="{{ $sanphamphu->sorted_images->first()->photo_alt_text ?? $sanphamphu->title }}"
-                                class="w-full h-72 sm:h-96 md:h-[500px] object-cover rounded-2xl transition-all duration-300"
-                                x-transition>
+                        <div
+                            class="relative overflow-hidden rounded-2xl shadow-md h-72 sm:h-96 md:h-[500px] w-full bg-gray-100 flex items-center justify-center">
+                            <img :src="mainImage ? '/storage/' + mainImage : '/images/no-image.png'"
+                                alt="{{ $sanphamphu->title }}"
+                                class="max-h-full max-w-full object-contain transition-all duration-300">
                         </div>
 
-                        {{-- Danh sách tất cả ảnh (ảnh đại diện lên đầu) --}}
+                        {{-- Thumbnail --}}
                         <div class="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
                             @foreach ($sanphamphu->sorted_images as $img)
                                 <img src="{{ asset('storage/' . $img->image_path) }}"
                                     alt="{{ $img->photo_alt_text ?? $sanphamphu->title }}"
-                                    class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl border border-gray-200 object-cover cursor-pointer hover:ring-2 hover:ring-primary-500 transition-all"
-                                    @click="mainImage = '{{ $img->image_path }}'">
+                                    class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl border border-gray-200 object-contain cursor-pointer hover:ring-2 hover:ring-primary-500 transition-all"
+                                    @click="mainImage = '{{ addslashes($img->image_path) }}'">
                             @endforeach
                         </div>
                     @else
@@ -83,14 +85,12 @@
                     @endif
                 </div>
 
-
-
-                {{-- 📋 Thông tin sản phẩm --}}
+                {{-- Thông tin sản phẩm --}}
                 <div class="space-y-4 sm:space-y-6">
                     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">{{ $sanphamphu->title }}
                     </h1>
 
-                    {{-- Danh sách thông số --}}
+                    {{-- Thông số --}}
                     <ul class="divide-y divide-gray-100 text-sm sm:text-base text-gray-700">
                         <li class="py-2"><span class="font-semibold">Mã sản phẩm:</span>
                             {{ $sanphamphu->code ?? 'Đang cập nhật...' }}</li>
@@ -98,7 +98,7 @@
                             {{ $sanphamphu->name ?? 'Đang cập nhật...' }}</li>
                     </ul>
 
-                    {{-- 💰 Giá bán --}}
+                    {{-- Giá bán --}}
                     <p class="text-lg font-semibold mt-4">
                         Giá:
                         <span class="text-primary-600 text-xl font-bold">
@@ -110,7 +110,7 @@
                         </span>
                     </p>
 
-                    {{-- 🛒 Nút hành động --}}
+                    {{-- Nút hành động --}}
                     <div class="flex flex-wrap gap-3 mt-6">
                         <button @click="openOrderForm = true"
                             class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold shadow transition text-sm sm:text-base w-full sm:w-auto">
@@ -124,16 +124,14 @@
                 </div>
             </div>
 
-            {{-- 📦 Form đặt hàng --}}
+            {{-- Form đặt hàng --}}
             <x-dathang :product="$sanphamphu" />
 
-            {{-- 📑 Tab mô tả, hướng dẫn, liên hệ --}}
+            {{-- Tab mô tả, hướng dẫn, liên hệ --}}
             <x-tab :product="$sanphamphu" :formattedPhone="$formattedPhone" />
 
         </div>
     </section>
-
-
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

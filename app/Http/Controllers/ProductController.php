@@ -12,37 +12,6 @@ use App\Models\Category;
 
 class ProductController extends Controller
 {
-    // public function allProducts()
-    // {
-    //     SEOMeta::setTitle('Tất cả sản phẩm | '.config('app.name')) ;
-
-    //     $products = Product::query()->with(['categories', 'user'])
-    //         ->published()
-    //         ->paginate(20);
-
-    //     return view('livewire.product-page', [
-    //         'products' => $products,
-    //     ]);
-    // }
-
-    public function search(Request $request)
-    {
-        SEOMeta::setTitle('Kết quả tìm kiếm cho "'.$request->get('query').'"');
-
-        $request->validate([
-            'query' => 'required',
-        ]);
-        $searchedProducts = Product::query()
-            ->with(['categories', 'user'])
-            ->published()
-            ->whereAny(['title', 'sub_title'], 'like', '%'.$request->get('query').'%')
-            ->paginate(10)->withQueryString();
-
-        return view('filament-blog::products.search', [
-            'products' => $searchedProducts,
-            'searchMessage' => 'Kết quả tìm kiếm cho "'.$request->get('query').'"',
-        ]);
-    }
 
     public function show(Category $category, Product $product)
     {

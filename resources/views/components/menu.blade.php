@@ -19,8 +19,10 @@
             <form action="{{ route('filamentblog.post.search') }}" method="GET"
                 class="hidden md:flex items-center flex-1 max-w-md bg-white border border-gray-300 rounded-full px-3 py-1 shadow-sm mx-4">
 
-                <input type="text" name="query" placeholder="Nhập tên loại cá cần tìm ?"
-                    class="flex-1 text-sm text-gray-700 placeholder-gray-400 focus:outline-none bg-transparent pl-2 py-2 rounded-full">
+                <input type="text" name="query"
+                    class="flex-1 text-sm text-gray-700 placeholder-gray-400 bg-transparent pl-2 py-2 rounded-full 
+                     focus:outline-none border-none"
+                    placeholder="Tìm kiếm nội dung...">
 
                 <button type="submit"
                     class="flex items-center justify-center bg-cyan-700 hover:bg-cyan-800 text-white rounded-full w-9 h-9 ml-1 transition">

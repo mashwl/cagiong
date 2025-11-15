@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('sanphamphu_id')->nullable();
             $table->integer('quantity')->default(1);
             $table->decimal('total', 12, 2)->nullable();
             $table->string('status')->default('pending'); // pending | confirmed | shipped | completed | cancelled
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
+            $table->foreign('sanphamphu_id')->references('id')->on('sanphamphus')->onDelete('set null');
         });
     }
 

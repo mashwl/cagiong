@@ -34,7 +34,7 @@ class menu extends Component
     public function render(): View|Closure|string
     {
         return view('components.menu', [
-            'products_categories' => $this->product_categories,
+            'product_categories' => $this->product_categories,
             'sppCategories' => $this->sppCategories,
             'products' => $this->products,
             'categories' => $this->categories,

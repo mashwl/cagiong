@@ -3,7 +3,7 @@
     <section class="pt-6 sm:pt-10">
         <header class="container mx-auto mb-4 max-w-[800px] px-4 sm:px-6 pb-4 text-center">
             <h1 class="text-xl sm:text-3xl font-semibold tracking-tight text-gray-800">
-                🐟 Danh Mục: <span class="text-primary-600">{{ $sppCategory->name }}</span>
+                Danh Mục: <span class="text-primary-600">{{ $sppCategory->name }}</span>
             </h1>
         </header>
     </section>

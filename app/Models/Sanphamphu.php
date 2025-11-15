@@ -14,6 +14,7 @@ use FilamentTiptapEditor\TiptapEditor;
 use Firefly\FilamentBlog\Models\SeoDetail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
 class Sanphamphu extends Model
@@ -42,6 +43,11 @@ class Sanphamphu extends Model
         return $this->belongsToMany(SppCategory::class, 'spp_sppcategory');
     }
 
+    public function featuredProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(FeaturedProduct::class, 'featured_product_sanphamphu', 'sanphamphu_id', 'featured_product_id');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -55,11 +61,11 @@ class Sanphamphu extends Model
 
   public function getFeaturePhotoAttribute()
 {
-    $featured = $this->images()->where('is_featured', true)->first();
+    $featured = $this->hinhanhs()->where('is_featured', true)->first();
 
     return $featured
         ? asset('storage/' . $featured->image_path)
-        : ($this->images->first() ? asset('storage/' . $this->images->first()->image_path) : null);
+        : ($this->hinhanhs->first() ? asset('storage/' . $this->hinhanhs->first()->image_path) : null);
 }
 
        public static function getForm()

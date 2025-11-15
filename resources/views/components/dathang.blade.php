@@ -1,40 +1,12 @@
 @props(['product'])
-<div>
-            <style>
-        [x-cloak] {
-            display: none !important;
-        }
 
-        body {
-            transition: opacity .2s ease-in-out;
-        }
-
-        body.fade-out {
-            opacity: 0;
-        }
-
-        /* Mobile gallery swipe cảm ứng */
-        @media (max-width: 640px) {
-            .gallery-scroll {
-                display: flex;
-                overflow-x: auto;
-                gap: 0.5rem;
-                scroll-snap-type: x mandatory;
-            }
-
-            .gallery-scroll img {
-                scroll-snap-align: center;
-            }
-        }
-    </style>
 <div x-show="openOrderForm" x-cloak
     class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 md:p-4"
-    x-transition.opacity
-    @click.self="openOrderForm = false">
+    x-transition.opacity @click.self="openOrderForm = false">
 
     <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 md:p-8"
         x-transition.scale>
-        
+
         {{-- Nút đóng --}}
         <button @click="openOrderForm = false"
             class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition">
@@ -52,10 +24,10 @@
             Vui lòng điền thông tin để chúng tôi liên hệ xác nhận đơn hàng sớm nhất.
         </p>
 
-        {{-- ✅ Thông báo thành công --}}
+        {{-- Thông báo thành công --}}
         @if (session('success'))
             <div x-data="{ show: true }" x-show="show" x-transition.opacity.duration.500ms
-                class="mb-6 rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-green-700 text-sm relative" x-cloak>
+                class="mb-6 rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-green-700 text-sm relative">
                 <strong class="font-semibold">🎉 {{ session('success') }}</strong>
                 <button type="button" @click="show = false"
                     class="absolute top-2 right-3 text-green-500 hover:text-green-700">
@@ -67,8 +39,13 @@
         {{-- Form --}}
         <form action="{{ route('order.submit') }}" method="POST"
             class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
+
             @csrf
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            @if ($product instanceof \App\Models\Sanphamphu)
+                <input type="hidden" name="sanphamphu_id" value="{{ $product->id }}">
+            @else
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+            @endif
 
             {{-- Sản phẩm --}}
             <div class="flex flex-col">
@@ -123,12 +100,12 @@
                        focus:ring-1 focus:ring-cyan-200 px-3 text-center text-sm">
             </div>
 
-            {{-- Checkbox & Nút --}}
+            {{-- Checkbox + Submit --}}
             <div class="col-span-1 md:col-span-2 space-y-3 pt-2">
                 <div class="flex items-center gap-2">
                     <input type="checkbox" name="subscribe" value="1" id="subscribe"
                         class="rounded border-gray-300 text-cyan-600 focus:ring-cyan-500">
-                    <label for="subscribe" class="text-sm text-gray-700 select-none cursor-pointer">
+                    <label for="subscribe" class="text-sm text-gray-700 cursor-pointer">
                         Tôi muốn nhận bản tin khuyến mãi & sản phẩm mới
                     </label>
                 </div>
@@ -141,20 +118,4 @@
             </div>
         </form>
     </div>
-</div>
-
-       <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('a[href]').forEach(a => {
-                a.addEventListener('click', e => {
-                    const url = a.getAttribute('href');
-                    if (url && !url.startsWith('#') && !url.startsWith('javascript:') && !a
-                        .hasAttribute('target')) {
-                        document.body.classList.add('fade-out');
-                    }
-                });
-            });
-        });
-        window.addEventListener('pageshow', () => document.body.classList.remove('fade-out'));
-    </script>
 </div>

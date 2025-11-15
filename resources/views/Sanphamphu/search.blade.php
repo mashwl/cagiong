@@ -2,23 +2,23 @@
     <section>
         <header class="container mx-auto mb-4 max-w-[800px] px-6 pb-4 mt-10 text-center">
             <h3 class="inherits-color text-balance leading-tighter relative z-10 text-5xl font-semibold tracking-tight">
-               Kết quả tìm kiếm cho "{{ request()->query('query') }}"
+                Kết quả tìm kiếm cho "{{ request()->query('query') }}"
             </h3>
         </header>
     </section>
     <section class="pb-16 pt-8">
         <div class="container mx-auto">
             <div class="grid grid-cols-3 gap-x-14 gap-y-14">
-                @forelse ($products as $product)
-                   <x-card-product :product="$product"/>
-                    @empty
-                        <div class="flex col-span-3 justify-center w-full">
-                            <h2 class="text-2xl text-gray-300 font-semibold">Chưa có sản phẩm nào</h2>
-                        </div>
+                @forelse ($sanphamphus as $sanphamphu)
+                    <x-card-product :product="$sanphamphu" type="spp" />
+                @empty
+                    <div class="flex col-span-3 justify-center w-full">
+                        <h2 class="text-2xl text-gray-300 font-semibold">Chưa có sản phẩm nào</h2>
+                    </div>
                 @endforelse
             </div>
             <div class="mt-20">
-                {{ $products->links() }}
+                {{ $sanphamphus->links() }}
             </div>
         </div>
     </section>

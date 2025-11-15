@@ -3,29 +3,32 @@
 @php
     // Lấy slug danh mục phù hợp
     $categorySlug = 'khong-xac-dinh';
-    if ($type === 'product' && $product->categories) {
-        $categorySlug = optional($product->categories->first())->slug ?? 'khong-xac-dinh';
-    } elseif ($type === 'spp' && $product->danhmuc) {
-        $categorySlug = optional($product->danhmuc->first())->slug ?? 'khong-xac-dinh';
+
+    if ($type === 'product' && $product->categories?->isNotEmpty()) {
+        $categorySlug = optional($product->categories->first())->slug;
+    } elseif ($type === 'spp' && $product->danhmuc?->isNotEmpty()) {
+        $categorySlug = optional($product->danhmuc->first())->slug;
     }
 
-    // Xác định route hiển thị chi tiết
-    $link =
-        $type === 'product'
-            ? route('product.show', [
-                'category' => $categorySlug,
-                'product' => $product->slug,
-            ])
-            : route('spp.show', [
-                'sppCategory' => $categorySlug,
-                'sanphamphu' => $product->slug,
-            ]);
+    // Route chi tiết
+    if ($type === 'product') {
+        $link = route('product.show', [
+            'category' => $categorySlug ?? 'khong-xac-dinh',
+            'product' => $product->slug,
+        ]);
+    } elseif ($type === 'spp') {
+        $link = route('spp.show', [
+            'sppCategory' => $categorySlug ?? 'khong-xac-dinh',
+            'sanphamphu' => $product->slug,
+        ]);
+    }
 
     // Ảnh đại diện
     $mainImage =
-        $type === 'product'
+        $product->feature_photo ??
+        ($type === 'product'
             ? optional($product->images->first())->image_path
-            : optional($product->hinhanhs->first())->image_path;
+            : optional($product->hinhanhs->first())->image_path);
 
     // Giá sản phẩm
     $price = $product->price ?? null;
@@ -38,8 +41,9 @@
         {{-- Ảnh sản phẩm --}}
         <div class="relative h-[220px] sm:h-[250px] w-full rounded-xl bg-zinc-200 overflow-hidden shadow-md">
             @if ($mainImage)
-                <img class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover/blog-item:scale-105"
-                    src="{{ asset('storage/' . $mainImage) }}" alt="{{ $product->photo_alt_text ?? $product->title }}">
+                <img class="h-full w-full object-contain object-center transition-transform duration-700 ease-out group-hover/blog-item:scale-105"
+                    src="{{ str_starts_with($mainImage, 'http') ? $mainImage : asset('storage/' . $mainImage) }}"
+                    alt="{{ $product->photo_alt_text ?? $product->title }}">
             @else
                 <div class="h-full w-full bg-gray-300 flex items-center justify-center text-gray-500">
                     Không có hình ảnh
@@ -58,11 +62,13 @@
                 class="mb-2 line-clamp-2 text-lg sm:text-xl font-semibold text-gray-800 transition-colors duration-300 group-hover/blog-item:text-primary-700">
                 {{ $product->title }}
             </h2>
+
+            {{-- Giá sản phẩm --}}
             <span class="text-secondary-600 text-lg sm:text-xl font-bold">
                 @if ($priceMin && $priceMax)
                     {{ number_format($priceMin, 0, ',', '.') }}đ -
                     {{ number_format($priceMax, 0, ',', '.') }}đ
-                @elseif($price)
+                @elseif ($price)
                     {{ number_format($price, 0, ',', '.') }}đ
                 @else
                     <span class="text-gray-500 text-base font-normal">đang cập nhật</span>

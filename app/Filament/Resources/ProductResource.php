@@ -13,6 +13,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Firefly\FilamentBlog\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -61,6 +62,9 @@ class ProductResource extends Resource
                         return Str::limit($record->sub_title, 40);
                     })
                     ->searchable()->limit(20),
+                TextColumn::make('code')
+                    ->label('Mã Sản Phẩm')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->label('Trạng thái')
                     ->badge()

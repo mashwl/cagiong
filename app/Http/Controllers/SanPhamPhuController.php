@@ -10,36 +10,6 @@ use Illuminate\Http\Request;
 
 class SanPhamPhuController extends Controller
 {
-    public function allProducts()
-    {
-        SEOMeta::setTitle('Tất cả sản phẩm | '.config('app.name')) ;
-
-        $sanphamphus = ModelsSanphamphu::query()->with(['spp_categories', 'user'])
-            ->published()
-            ->paginate(20);
-        return view('Sanphamphu.all-products', [
-            'sanphamphus' => $sanphamphus,
-        ]);
-    }
-
-    public function search(Request $request)
-    {
-        SEOMeta::setTitle('Kết quả tìm kiếm cho "'.$request->get('query').'"');
-
-        $request->validate([
-            'query' => 'required',
-        ]);
-        $searchedProducts = ModelsSanphamphu::query()
-            ->with(['spp_categories', 'user'])
-            ->published()
-            ->whereAny('title', 'like', '%'.$request->get('query').'%')
-            ->paginate(10)->withQueryString();
-
-        return view('Sanphamphu.search', [
-            'sanphamphus' => $searchedProducts,
-            'searchMessage' => 'Kết quả tìm kiếm cho "'.$request->get('query').'"',
-        ]);
-    }
 
     public function show(SppCategory $sppCategory, ModelsSanphamphu $sanphamphu)
     {

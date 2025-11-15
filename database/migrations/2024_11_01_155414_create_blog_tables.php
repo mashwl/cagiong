@@ -145,16 +145,16 @@ return new class () extends Migration {
      * @return void
      */
     public function down()
-    {
+    {   
+        Schema::dropIfExists(config('filamentblog.tables.prefix').'seo_details');
+        Schema::dropIfExists(config('filamentblog.tables.prefix').'category_'.config('filamentblog.tables.prefix').'post');
         Schema::dropIfExists(config('filamentblog.tables.prefix').'categories');
         Schema::dropIfExists(config('filamentblog.user.model'));
-        Schema::dropIfExists(config('filamentblog.tables.prefix').'posts');
-        Schema::dropIfExists(config('filamentblog.tables.prefix').'category_'.config('filamentblog.tables.prefix').'post');
-        Schema::dropIfExists(config('filamentblog.tables.prefix').'seo_details');
         Schema::dropIfExists(config('filamentblog.tables.prefix').'comments');
+        Schema::dropIfExists(config('filamentblog.tables.prefix').'post_'.config('filamentblog.tables.prefix').'tag');
+        Schema::dropIfExists(config('filamentblog.tables.prefix').'posts');
         Schema::dropIfExists(config('filamentblog.tables.prefix').'news_letters');
         Schema::dropIfExists(config('filamentblog.tables.prefix').'tags');
-        Schema::dropIfExists(config('filamentblog.tables.prefix').'post_'.config('filamentblog.tables.prefix').'tag');
         Schema::dropIfExists(config('filamentblog.tables.prefix').'share_snippets');
         Schema::dropIfExists(config('filamentblog.tables.prefix').'settings');
     }

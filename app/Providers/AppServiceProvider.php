@@ -30,13 +30,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::share('setting', Setting::first());
-        View::share('categories', Category::all());
-        View::share('sppCategories', SppCategory::all());
-        View::share('products', Product::all());
-        View::share('posts', Post::all());
+        // View::share('categories', Category::all());
+        // View::share('sppCategories', SppCategory::all());
+        // View::share('products', Product::all());
+        // View::share('posts', Post::all());
         View::share('seedings', Seeding::all());
         View::share('users', User::all());
-        View::share('product_categories', ProductCategory::all());
+        // View::share('product_categories', ProductCategory::all());
 
     }
 }
