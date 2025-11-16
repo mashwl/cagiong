@@ -22,18 +22,18 @@ class SanphamphuResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
         public static function getSlug(): string
     {
-        return 'san-pham-phu';
+        return 'phu-kien';
     }
     public static function getBreadcrumb(): string
     {
-        return ' Sản phẩm phụ ';
+        return ' phụ kiện ';
     }
     public static function getNavigationBadge(): ?string
     {
         return strval(Sanphamphu::count());
     }
 
-    protected static ?string $modelLabel = 'Sản phẩm phụ';
+    protected static ?string $modelLabel = 'Phụ kiện';
 
     public static function form(Form $form): Form
     {

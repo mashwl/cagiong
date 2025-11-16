@@ -21,9 +21,9 @@ class SppCategoryResource extends Resource
     protected static ?string $navigationGroup = 'Sản Phẩm';
         public static function getSlug(): string
     {
-        return 'danh-muc-san-pham-phu';
+        return 'danh-muc-phu-kien';
     }
-    protected static ?string $modelLabel = 'danh mục sản phẩm phụ';
+    protected static ?string $modelLabel = 'danh mục phụ kiện';
     public static function getNavigationBadge(): ?string
     {
         return strval(SppCategory::count());
