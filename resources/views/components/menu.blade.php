@@ -178,7 +178,7 @@
                     @mouseleave="open = false" x-cloak>
 
                     <button class="flex items-center uppercase font-semibold hover:text-yellow-300 transition">
-                        Sản phẩm cá giống
+                        cá giống
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="ml-1 w-4 h-4 transition duration-200 group-hover:text-yellow-300" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
@@ -275,7 +275,7 @@
 
                     {{-- Nút chính --}}
                     <button class="flex items-center uppercase font-semibold hover:text-yellow-300 transition">
-                        Sản phẩm phụ
+                        phụ kiện chăn nuôi
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="ml-1 w-4 h-4 transition duration-200 group-hover:text-yellow-300" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
@@ -420,7 +420,7 @@
                     <div x-data="{ openSub: false }" class="px-4" x-cloak>
                         <button @click="openSub = !openSub"
                             class="flex justify-between uppercase w-full py-2 hover:bg-cyan-800 rounded">
-                            <span>Sản phẩm cá giống</span>
+                            <span> cá giống</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mt-1" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -441,7 +441,7 @@
                     <div x-data="{ openSpp: false }" class="px-4" x-cloak>
                         <button @click="openSpp = !openSpp"
                             class="flex justify-between uppercase w-full py-2 hover:bg-cyan-800 rounded">
-                            <span>Sản phẩm phụ</span>
+                            <span>Phụ Kiện Chăn Nuôi</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mt-1" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
