@@ -92,9 +92,7 @@
 
                     {{-- Thông số --}}
                     <ul class="divide-y divide-gray-100 text-sm sm:text-base text-gray-700">
-                        <li class="py-2"><span class="font-semibold">Mã sản phẩm:</span>
-                            {{ $sanphamphu->code ?? 'Đang cập nhật...' }}</li>
-                        <li class="py-2"><span class="font-semibold">Tên giống:</span>
+                        <li class="py-2"><span class="font-semibold">Thông tin mô tả:</span>
                             {{ $sanphamphu->name ?? 'Đang cập nhật...' }}</li>
                     </ul>
 
@@ -112,13 +110,14 @@
 
                     {{-- Nút hành động --}}
                     <div class="flex flex-wrap gap-3 mt-6">
-                        <button @click="openOrderForm = true"
+                        <button @click="$dispatch('open-order-form')"
                             class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold shadow transition text-sm sm:text-base w-full sm:w-auto">
                             🛒 Đặt hàng ngay
                         </button>
+
                         <a href="tel:{{ $formattedPhone }}"
                             class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold shadow transition text-sm sm:text-base w-full sm:w-auto text-center">
-                            ☎ Gọi {{ $formattedPhone }}
+                            ☎ Gia Công Theo Yêu Cầu {{ $formattedPhone }}
                         </a>
                     </div>
                 </div>

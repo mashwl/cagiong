@@ -53,7 +53,7 @@ return new class () extends Migration {
 
         Schema::create(config('filamentblog.tables.prefix').'seo_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("post_id")
+            $table->foreignId("post_id")->nullable()
                 ->constrained(table: config('filamentblog.tables.prefix').'posts')
                 ->cascadeOnDelete();
             $table->unsignedBigInteger('product_id')->nullable();

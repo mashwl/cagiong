@@ -1,26 +1,27 @@
 <x-blog-layout>
     <section>
         <header class="container mx-auto mb-4 max-w-[800px] px-6 pb-4 mt-10 text-center">
-            <h3 class="inherits-color text-balance leading-tighter relative z-10 text-5xl font-semibold tracking-tight">
+            <h3 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
                 Kết quả tìm kiếm cho "{{ request()->query('query') }}"
             </h3>
         </header>
     </section>
+
     <section class="pb-16 pt-8">
-        <div class="container mx-auto">
-            <div class="grid grid-cols-3 gap-x-14 gap-y-14">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-x-6 sm:gap-x-10 gap-y-10">
                 @forelse ($sanphamphus as $sanphamphu)
                     <x-card-product :product="$sanphamphu" type="spp" />
                 @empty
-                    <div class="flex col-span-3 justify-center w-full">
-                        <h2 class="text-2xl text-gray-300 font-semibold">Chưa có sản phẩm nào</h2>
+                    <div class="flex col-span-1 sm:col-span-2 md:col-span-3 justify-center w-full">
+                        <h2 class="text-xl sm:text-2xl text-gray-300 font-semibold">Chưa có sản phẩm nào</h2>
                     </div>
                 @endforelse
             </div>
-            <div class="mt-20">
+
+            <div class="mt-12 sm:mt-16">
                 {{ $sanphamphus->links() }}
             </div>
         </div>
     </section>
-
 </x-blog-layout>

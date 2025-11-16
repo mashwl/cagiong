@@ -3,8 +3,8 @@
 
 <head>
     @php
-    use Firefly\FilamentBlog\Models\Setting;
-    $setting = Setting::first();
+        use Firefly\FilamentBlog\Models\Setting;
+        $setting = Setting::first();
     @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,10 +22,9 @@
     <x-menu />
     {{ $slot }}
     <livewire:components.footer />
-
-    <livewire:components.floatbutton />
+    <x-floatbutton />
     <livewire:components.script />
-@livewireScripts()
+    @livewireScripts()
 </body>
 
 </html>

@@ -7,6 +7,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Set;
@@ -77,6 +78,7 @@ class Sanphamphu extends Model
                         ->schema([
                             Select::make('spp_category_id')->label('Danh mục')
                                 ->multiple()
+                                ->required()
                                 ->preload()
                                 ->createOptionForm(SppCategory::getForm())
                                 ->searchable()
@@ -99,8 +101,8 @@ class Sanphamphu extends Model
                             TextInput::make('code')
                                 ->label('Mã sản phẩm')
                                 ->maxLength(20),
-                            TextInput::make('name')
-                                ->label('Tên sản phẩm- Cách gọi')
+                            Textarea::make('name')
+                                ->label('Sơ lược sản phẩm')
                                 ->maxLength(255),
                             TextInput::make('price')
                                 ->label('Giá sản phẩm (VND)')

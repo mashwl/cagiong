@@ -34,8 +34,8 @@ class AppServiceProvider extends ServiceProvider
         // View::share('sppCategories', SppCategory::all());
         // View::share('products', Product::all());
         // View::share('posts', Post::all());
-        View::share('seedings', Seeding::all());
-        View::share('users', User::all());
+        // View::share('seedings', Seeding::all());
+        // View::share('users', User::all());
         // View::share('product_categories', ProductCategory::all());
 
     }

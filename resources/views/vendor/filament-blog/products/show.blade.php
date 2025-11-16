@@ -94,22 +94,22 @@
 
                     {{-- Thông số --}}
                     <ul class="divide-y divide-gray-100 text-sm sm:text-base text-gray-700">
-                        <li class="py-2"><span class="font-semibold">Mã sản phẩm:</span>
-                            {{ $product->code ?? 'Đang cập nhật...' }}</li>
                         <li class="py-2"><span class="font-semibold">Tên giống:</span>
                             {{ $product->name ?? 'Đang cập nhật...' }}</li>
-                        <li class="py-2"><span class="font-semibold">Mô hình nuôi:</span>
-                            {{ $product->mohinhnuoi ?? 'Đang cập nhật...' }}</li>
-                        <li class="py-2"><span class="font-semibold">Thức ăn:</span>
-                            {{ $product->thucan ?? 'Đang cập nhật...' }}</li>
-                        <li class="py-2"><span class="font-semibold">Độ khó nuôi:</span>
-                            {{ $product->dokhonuoi ?? 'Đang cập nhật...' }}</li>
-                        <li class="py-2"><span class="font-semibold">Giá trị kinh tế:</span>
-                            {{ $product->giatrikinhte ?? 'Đang cập nhật...' }}</li>
                         <li class="py-2"><span class="font-semibold">Thời gian nuôi:</span>
                             {{ $product->thoigiannuoi ?? 'Đang cập nhật...' }}</li>
-                        <li class="py-2"><span class="font-semibold">Phù hợp với:</span>
+                        <li class="py-2"><span class="font-semibold">Khôi lượng khi trưởng thành:</span>
+                            {{ $product->mohinhnuoi ?? 'Đang cập nhật...' }}</li>
+                        <li class="py-2"><span class="font-semibold">Môi trường thích hợp:</span>
                             {{ $product->phuhop ?? 'Đang cập nhật...' }}</li>
+                        <li class="py-2"><span class="font-semibold">Thức ăn phù hợp:</span>
+                            {{ $product->thucan ?? 'Đang cập nhật...' }}</li>
+                        <li class="py-2"><span class="font-semibold">Các Loại Con Giống:</span>
+                            {{ $product->dokhonuoi ?? 'Đang cập nhật...' }}</li>
+                        <li class="py-2"><span class="font-semibold">Size Cá Giống:</span>
+                            {{ $product->giatrikinhte ?? 'Đang cập nhật...' }}</li>
+
+
                     </ul>
 
                     {{-- Giá --}}
@@ -129,25 +129,26 @@
 
                     {{-- Nút hành động --}}
                     <div class="flex flex-wrap gap-3 mt-6">
-                        <button @click="openOrderForm = true"
-                            class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold shadow transition text-sm sm:text-base w-full sm:w-auto">
-                            🛒 Đặt hàng ngay
-                        </button>
-                        <a href="tel:{{ $formattedPhone }}"
-                            class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold shadow transition text-sm sm:text-base w-full sm:w-auto text-center">
-                            ☎ Gọi {{ $formattedPhone }}
-                        </a>
+                        <div class="flex flex-wrap gap-3 mt-6">
+                            <button @click="$dispatch('open-order-form')"
+                                class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold shadow transition text-sm sm:text-base w-full sm:w-auto">
+                                🛒 Đặt hàng ngay
+                            </button>
+                            <a href="tel:{{ $formattedPhone }}"
+                                class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold shadow transition text-sm sm:text-base w-full sm:w-auto text-center">
+                                ☎ Gọi {{ $formattedPhone }}
+                            </a>
+                        </div>
                     </div>
                 </div>
+
+                {{-- Form đặt hàng --}}
+                <x-dathang :product="$product" />
+
+                {{-- Tab mô tả --}}
+                <x-tab :product="$product" :formattedPhone="$formattedPhone" />
+
             </div>
-
-            {{-- Form đặt hàng --}}
-            <x-dathang :product="$product" />
-
-            {{-- Tab mô tả --}}
-            <x-tab :product="$product" :formattedPhone="$formattedPhone" />
-
-        </div>
     </section>
 
     <script>

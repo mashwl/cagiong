@@ -9,4 +9,8 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSeeding extends CreateRecord
 {
     protected static string $resource = SeedingResource::class;
+    protected function getRedirectUrl(): string
+{
+    return $this->getResource()::getUrl('index');
+}
 }

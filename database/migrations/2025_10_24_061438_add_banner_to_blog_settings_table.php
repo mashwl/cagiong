@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('banner')->nullable()->after('logo');
             $table->string('phone')->nullable()->after('banner');
             $table->string('email')->nullable()->after('phone');
+            $table->string('map')->nullable()->after('email');
         });
     }
 
@@ -24,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table(config('filamentblog.tables.prefix').'settings', function (Blueprint $table) {
-            $table->dropColumn(['banner', 'phone', 'email']);
+            $table->dropColumn(['banner', 'phone', 'email', 'map']);
         });
     }
 };

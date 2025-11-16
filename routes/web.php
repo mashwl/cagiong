@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SanPhamPhu;
 use App\Http\Controllers\SanPhamPhuCategory;
 use App\Http\Controllers\SanPhamPhuController;
+use App\Livewire\Contact;
 use App\Livewire\Home;
 use App\Livewire\Page;
 use App\Livewire\ProductPage;
@@ -31,6 +32,7 @@ Route::middleware('guest')->group(function () {
 });
 Route::get('/san-pham-phu/danh-muc/{sppCategory:slug}', [SanPhamPhuCategory::class, 'posts'])->name('sppcategory.show');
 Route::get('/san-pham-phu/{sppCategory:slug}/{sanphamphu:slug}', [SanPhamPhuController::class, 'show'])->name('spp.show');
+Route::get('/lien-he', Contact::class)->name('contact');
 
 
 

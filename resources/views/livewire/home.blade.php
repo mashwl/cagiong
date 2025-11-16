@@ -23,7 +23,6 @@
     <div class="container-fluid country overflow-hidden py-5">
         <div class="container">
 
-            {{-- === HEADER: Desktop & Tablet === --}}
             <div class="section-title text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="sub-style">
                     <h5 class="sub-title text-primary px-3">Sản Phẩm Nổi Bật</h5>
@@ -36,9 +35,6 @@
                 </p>
             </div>
 
-            {{-- === HEADER Mobile === --}}
-
-            {{-- === SẢN PHẨM === --}}
             <div class="row g-4 text-center">
 
                 {{-- Sản phẩm chính (featured) --}}
@@ -53,8 +49,8 @@
                             <div class="rounded overflow-hidden d-flex align-items-center justify-content-center"
                                 style="height: 220px; background: #f8f9fa;">
                                 @if ($image)
-                                    <img src="{{ $image }}"
-                                        style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                                    <img src="{{ $image }}" class="img-fluid"
+                                        style="max-height: 100%; object-fit: contain;">
                                 @else
                                     <div
                                         class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary text-white">
@@ -64,31 +60,31 @@
                             </div>
 
                             <a href="{{ route('product.show', ['category' => $categorySlug, 'product' => $product->slug]) }}"
-                                class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-white fs-5 fw-bold"
-                                style="background: rgba(0,0,0,0.5); opacity:0; transition:0.3s;">
+                                class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-white fs-5 fw-bold overlay-link">
                                 {{ $product->title }}
                             </a>
 
                             <div class="country-name mt-2">
                                 <a href="{{ route('product.show', ['category' => $categorySlug, 'product' => $product->slug]) }}"
-                                    class="text-white fs-5">{{ $product->title }}</a>
+                                    class="text-white fs-5 d-block text-truncate">{{ $product->title }}</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
+
                 {{-- Sản phẩm phụ --}}
                 @foreach ($featured->sanphamphu as $sp)
                     @php
                         $categorySlug = optional($sp->danhmuc->first())->slug ?? 'khong-xac-dinh';
                         $image = $sp->feature_photo ?? ($sp->hinhanhs->first()->image_path ?? null);
                     @endphp
-                    <div class="col-6 col-md-4 col-xl-3 mb-4 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="col-6 col-md-4 col-xl-3 mb-4">
                         <div class="country-item position-relative overflow-hidden rounded" style="cursor: pointer;">
                             <div class="rounded overflow-hidden d-flex align-items-center justify-content-center"
                                 style="height: 220px; background: #f8f9fa;">
                                 @if ($image)
                                     <img src="{{ str_starts_with($image, 'http') ? $image : asset('storage/' . $image) }}"
-                                        style="max-height: 100%; max-width: 100%; object-fit: contain;"
+                                        class="img-fluid" style="max-height: 100%; object-fit: contain;"
                                         alt="{{ $sp->title }}">
                                 @else
                                     <div
@@ -99,20 +95,34 @@
                             </div>
 
                             <a href="{{ route('spp.show', ['sppCategory' => $categorySlug, 'sanphamphu' => $sp->slug]) }}"
-                                class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-center text-white fs-5 fw-bold"
-                                style="background-color: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s; text-decoration: none;">
+                                class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-center text-white fs-5 fw-bold overlay-link">
                                 {{ $sp->title }}
                             </a>
 
                             <div class="country-name mt-2">
                                 <a href="{{ route('spp.show', ['sppCategory' => $categorySlug, 'sanphamphu' => $sp->slug]) }}"
-                                    class="text-white fs-5">{{ $sp->title }}</a>
+                                    class="text-white fs-5 d-block text-truncate">{{ $sp->title }}</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
 
             </div>
+
+            {{-- CSS để overlay hover đẹp --}}
+            <style>
+                .overlay-link {
+                    background-color: rgba(0, 0, 0, 0.5);
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                    text-decoration: none;
+                }
+
+                .country-item:hover .overlay-link {
+                    opacity: 1;
+                }
+            </style>
+
 
             <!-- Products End -->
             <!-- Features Start -->
@@ -306,51 +316,65 @@
             <!-- Post Start -->
             <div class="container-fluid training overflow-hidden bg-light py-5">
                 <div class="container py-5">
+                    {{-- Section title --}}
                     <div class="section-title text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="sub-style">
                             <h5 class="sub-title text-primary px-3">Nơi Chia Sẻ Kinh Nghiệm</h5>
                         </div>
                         <h2 class="display-5 mb-4">Kiến thức & kỹ thuật nuôi</h2>
                     </div>
+
                     @if ($posts->isNotEmpty())
                         <div class="position-relative overflow-hidden">
-                            <div id="autoCarousel" class="d-flex gap-4">
-                                @foreach ($posts->where('status', 'published')->sortByDesc('published_at')->take(4) as $post)
-                                    <div class="flex-shrink-0" style="width: 280px;">
-                                        <div class="training-item">
-                                            <div class="training-inner">
-                                                <div class="training-img-wrapper overflow-hidden rounded bg-white d-flex align-items-center justify-content-center"
-                                                    style="height: 220px;">
-                                                    <img src="{{ Storage::url($post->cover_photo_path) }}"
-                                                        class="w-auto h-100 object-fit-contain"
-                                                        alt="{{ $post->title }}">
-                                                </div>
-                                                <div class="training-title-name">
-                                                    <a href="#"
-                                                        class="h5 text-white mb-0">{{ $post->title }}</a>
-                                                </div>
+                            <div class="d-flex flex-row flex-nowrap gap-3 overflow-auto pb-3" id="autoCarousel">
+                                @foreach ($posts->where('status', 'published')->sortByDesc('published_at')->take(8) as $post)
+                                    <div class="flex-shrink-0" style="width: 240px;">
+                                        <div class="training-item rounded shadow-sm overflow-hidden">
+                                            {{-- Image --}}
+                                            <div class="training-img-wrapper rounded-top bg-white d-flex align-items-center justify-content-center"
+                                                style="height: 180px;">
+                                                <img src="{{ Storage::url($post->cover_photo_path) }}"
+                                                    class="img-fluid h-100 object-fit-contain"
+                                                    alt="{{ $post->title }}">
                                             </div>
-                                            <div class="training-content bg-secondary rounded-bottom p-3">
-                                                <a href="{{ route('filamentblog.post.show', $post) }}">
-                                                    <h6 class="text-white mb-2">{{ $post->title }}</h6>
-                                                </a>
-                                                <p class="text-black" style="color: ffff !important;">
-                                                    {{ Str::limit(strip_tags($post->body), 60) }}
+
+                                            {{-- Title & excerpt --}}
+                                            <div class="training-content bg-secondary text-white p-3">
+                                                <a href="{{ route('filamentblog.post.show', $post) }}"
+                                                    class="h6 d-block text-white mb-2 text-truncate">{{ $post->title }}</a>
+                                                <p class="mb-0 small text-white">
+                                                    {{ Str::limit(strip_tags($post->body), 80) }}
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-
                         </div>
                     @endif
+
+                    {{-- Button xem thêm --}}
                     <div class="col-12 text-center mt-4">
                         <a class="btn btn-primary border-secondary rounded-pill py-2 px-5 wow fadeInUp"
                             data-wow-delay="0.1s" href="{{ route('filamentblog.post.all') }}">Xem thêm</a>
                     </div>
                 </div>
             </div>
+
+            {{-- Optional: hide scrollbar but still scrollable --}}
+            <style>
+                #autoCarousel::-webkit-scrollbar {
+                    display: none;
+                }
+
+                #autoCarousel {
+                    -ms-overflow-style: none;
+                    /* IE and Edge */
+                    scrollbar-width: none;
+                    /* Firefox */
+                }
+            </style>
+
             <!-- Post End -->
 
 

@@ -138,6 +138,7 @@ use HasFactory;
                             Select::make('category_id')->label('Danh mục')
                                 ->multiple()
                                 ->preload()
+                                ->required()
                                 ->createOptionForm(Category::getForm())
                                 ->searchable()
                                 ->relationship('categories', 'name')
@@ -158,42 +159,31 @@ use HasFactory;
                                 ->maxLength(255),
                             TextInput::make('code')
                                 ->label('Mã sản phẩm')
-                                ->default(fn() => 'SP-' . strtoupper(Str::random(6)))
-                                ->disabled()
-                                ->dehydrated() // vẫn lưu vào database
                                 ->maxLength(20),
-
                             TextInput::make('name')
-                                ->label('Tên sản phẩm- Cách gọi')
+                                ->label('Tên giống')
                                 ->maxLength(255),
                             TextInput::make('mohinhnuoi')
-                                ->label('Mô hình nuôi')
+                                ->label('Khối lượng khi trưởng thành')
                                 ->maxLength(255),
                             TextInput::make('thucan')
-                                ->label('Thức ăn')
+                                ->label('Thức ăn phù hợp')
                                 ->maxLength(255),
                             TextInput::make('dokhonuoi')
-                                ->label('Độ khó nuôi')
+                                ->label('Các loại con giống')
                                 ->maxLength(255),
                             TextInput::make('giatrikinhte')
-                                ->label('Giá trị kinh tế')
+                                ->label('Size cá giống')
                                 ->maxLength(255),
                             TextInput::make('thoigiannuoi')
                                 ->label('Thời gian nuôi')
                                 ->maxLength(255),
                             TextInput::make('phuhop')
-                                ->label('Đối tượng nuôi phù hợp')
+                                ->label('Môi trường thích hợp')
                                 ->maxLength(255), 
                             TextInput::make('price')
                                 ->label('Giá sản phẩm (VND)')
                                 ->numeric(),
-                            TextInput::make('price_min')
-                                ->label('Giá tối thiểu (VND)')
-                                ->numeric(),
-                            TextInput::make('price_max')
-                                ->label('Giá tối đa (VND)')
-                                ->numeric(),
-
 
                         ]),
                     TiptapEditor::make('body')
@@ -226,7 +216,6 @@ use HasFactory;
 
                 Toggle::make('is_featured')
                     ->label('Đặt làm ảnh đại diện ')
-                    ->helperText('Tick để chọn ảnh này làm ảnh đại diện chính.')
                     ->inline(false),
             ])
             ->minItems(1)
@@ -249,7 +238,7 @@ use HasFactory;
                                 ->live()
                                 ->inline()
                                 ->options(ProductStatus::class)
-                                ->default(ProductStatus::PENDING->value),
+                                ->default(ProductStatus::PUBLISHED->value),
 
                             DateTimePicker::make('scheduled_for')
                                 ->label('Chọn ngày lên lịch')
