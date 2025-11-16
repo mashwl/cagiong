@@ -1,15 +1,5 @@
 <div x-data="{ openOrder: false, showSuccessModal: false }" x-cloak class="fixed bottom-4 right-4 flex flex-col gap-3 z-50">
-    @php
-        use App\Models\Category;
-        use App\Models\Product;
-        use App\Models\Sanphamphu;
-        use App\Models\SppCategory;
-        use Firefly\FilamentBlog\Models\Category as ModelsCategory;
-        $products = Product::get();
-        $product_categories = Category::with('products')->get();
-        $sppCategories = SppCategory::with('sanphamphus')->get();
-        $categories = ModelsCategory::with('posts')->get();
-    @endphp
+
     <!-- 🐟 Nút Đặt Hàng Nhanh -->
     <button @click="openOrder = true"
         class="flex items-center justify-center bg-teal-700 hover:bg-teal-800 text-white rounded-full w-14 h-14 shadow-lg transition">

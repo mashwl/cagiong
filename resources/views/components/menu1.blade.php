@@ -1,13 +1,4 @@
 @php
-    use App\Models\Category;
-    use App\Models\Product;
-    use App\Models\Sanphamphu;
-    use App\Models\SppCategory;
-    use Firefly\FilamentBlog\Models\Category as ModelsCategory;
-    $products = Product::get();
-    $product_categories = Category::with('products')->get();
-    $sppCategories = SppCategory::with('sanphamphus')->get();
-    $categories = ModelsCategory::with('posts')->get();
     $phone = $setting?->phone;
     // Thay 0 đầu thành +84 và thêm dấu cách mỗi 3 số cho đẹp
     $formattedPhone = preg_replace('/^0/', '+84 ', $phone);
@@ -52,7 +43,7 @@
         </div>
 
         <!-- Đặt hàng nhanh -->
-        <div x-data="{ openOrder: false, showSuccessModal: false }" x-cloak class="hidden md:block relative mx-3">
+        {{-- <div x-data="{ openOrder: false, showSuccessModal: false }" x-cloak class="hidden md:block relative mx-3">
             <button @click="openOrder = true"
                 class="bg-red-600 text-white font-semibold rounded-full px-5 py-2 md:px-6 md:py-2.5 shadow hover:bg-red-700 transition-colors text-sm md:text-base whitespace-nowrap">
                 ĐẶT HÀNG NHANH
@@ -168,7 +159,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <!-- Navigation -->
@@ -191,8 +182,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="ml-1 w-4 h-4 transition duration-200 group-hover:text-yellow-300" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 9l-7 7-7-7" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
 
@@ -288,8 +278,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="ml-1 w-4 h-4 transition duration-200 group-hover:text-yellow-300" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 9l-7 7-7-7" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
 

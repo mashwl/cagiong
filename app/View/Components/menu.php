@@ -12,7 +12,7 @@ use Firefly\FilamentBlog\Models\Setting;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class menu extends Component
+class Menu extends Component
 {
     public $product_categories;
     public $categories;
