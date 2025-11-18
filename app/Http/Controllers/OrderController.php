@@ -32,6 +32,8 @@ class OrderController extends Controller
         'quantity'      => 'required|integer|min:1',
         'subscribe'     => 'nullable|boolean',
         'note'          => 'nullable|string|max:500',
+        'type'          => 'required|in:order,quote',
+
     ]);
 
     $total = 0;
@@ -74,6 +76,7 @@ class OrderController extends Controller
         'total'        => $total,
         'status'       => 'pending',
         'subscribe'    => $request->boolean('subscribe'),
+        'type'         => $request->type,
     ]);
 
     // Lưu newsletter nếu có đăng ký

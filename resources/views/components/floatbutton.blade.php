@@ -19,23 +19,51 @@
         </svg>
     </button>
 
-    <!-- ☎️ CALL -->
-    <a href="tel:{{ $settings->phone ?? '#' }}"
-        class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white rounded-full w-14 h-14 shadow-lg transition">
-        <i class="fa fa-phone text-xl"></i>
-    </a>
+    <style>
+        @keyframes pulse-glow {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0px rgba(0, 255, 0, 0.6);
+            }
 
-    <!-- 💬 ZALO -->
-    <a href="{{ $settings->quick_links['zalo'] ?? '#' }}" target="_blank"
-        class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded-full w-14 h-14 shadow-lg transition font-bold text-sm">
-        Zalo
-    </a>
+            50% {
+                transform: scale(1.12);
+                box-shadow: 0 0 18px rgba(0, 255, 0, 0.8);
+            }
 
-    <!-- 💙 MESSENGER -->
-    <a href="{{ $settings->quick_links['messenger'] ?? '#' }}" target="_blank"
-        class="flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white rounded-full w-14 h-14 shadow-lg transition">
-        <i class="fab fa-facebook-messenger text-2xl"></i>
-    </a>
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0px rgba(0, 255, 0, 0.6);
+            }
+        }
+
+        .blink {
+            animation: pulse-glow 1.3s infinite;
+        }
+    </style>
+
+    <div class="flex flex-col space-y-4">
+        <!-- 📞 PHONE -->
+        <a href="tel:{{ $settings->phone ?? '#' }}"
+            class="blink flex items-center justify-center bg-green-600 hover:bg-green-700 text-white rounded-full w-14 h-14 shadow-lg transition">
+            <i class="fa fa-phone text-xl"></i>
+        </a>
+
+        <!-- 💬 ZALO -->
+        <a href="{{ $settings->quick_links['zalo'] ?? '#' }}" target="_blank"
+            class="blink flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded-full w-14 h-14 shadow-lg transition font-bold text-sm">
+            Zalo
+        </a>
+
+        <!-- 💙 MESSENGER -->
+        <a href="{{ $settings->quick_links['messenger'] ?? '#' }}" target="_blank"
+            class="blink flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white rounded-full w-14 h-14 shadow-lg transition">
+            <i class="fab fa-facebook-messenger text-2xl"></i>
+        </a>
+    </div>
+
+
+    <!-- 🔝 BACK TO TOP -->
     <button id="backToTop"
         class="hidden flex items-center justify-center bg-cyan-700 hover:bg-cyan-800 text-white rounded-full w-14 h-14 shadow-lg transition">
         <i class="fa fa-arrow-up text-xl"></i>
@@ -82,7 +110,7 @@
                     })
                 ">
                 @csrf
-
+                <input type="hidden" name="type" value="quote">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                     <div>

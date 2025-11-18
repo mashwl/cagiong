@@ -41,20 +41,23 @@
 
 
         <!-- Hotline -->
-        <div
-            class="hidden md:flex items-center space-x-2 border border-gray-300 rounded-full px-4 py-2 bg-white shadow-sm whitespace-nowrap text-sm md:text-base">
+        <a href="tel:{{ $formattedPhone }}"
+            class="hidden md:flex items-center space-x-2 border border-gray-300 rounded-full px-4 py-3 bg-white shadow-sm whitespace-nowrap text-sm md:text-base">
+
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 text-cyan-800" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M2 8.82V5a2 2 0 012-2h3.82a1 1 0 01.95.68l1.26 3.79a1 1 0 01-.27 1.04L8.91 10.09a11.05 11.05 0 005 5l1.58-1.58a1 1 0 011.04-.27l3.79 1.26a1 1 0 01.68.95V21a2 2 0 01-2 2h-3.82a2 2 0 01-1.99-1.72A15.97 15.97 0 012 8.82z" />
             </svg>
+
             <span class="font-semibold text-cyan-800">Hotline: {{ $formattedPhone }}</span>
-        </div>
+        </a>
+
 
         <!-- Đặt hàng nhanh -->
         <div x-data="{ openOrder: false, showSuccessModal: false }" x-cloak class="hidden md:block relative mx-3">
             <button @click="openOrder = true"
-                class="bg-red-600 text-white font-semibold rounded-full px-5 py-2 md:px-6 md:py-2.5 shadow hover:bg-red-700 transition-colors text-sm md:text-base whitespace-nowrap">
+                class="bg-red-600 text-white font-semibold rounded-full px-5 py-3 md:px-6 md:py-2.5 shadow hover:bg-red-700 transition-colors text-sm md:text-base whitespace-nowrap">
                 ĐẶT HÀNG NHANH
             </button>
 
@@ -76,7 +79,7 @@
                         </svg>
                     </button>
 
-                    <h2 class="text-2xl font-bold text-center text-cyan-800 mb-1">🐟 Đặt Hàng Nhanh</h2>
+                    <h2 class="text-2xl font-bold text-center text-cyan-800 mb-1">Đặt Hàng Nhanh</h2>
                     <p class="text-gray-600 text-center mb-6 text-sm">
                         Vui lòng nhập thông tin để chúng tôi liên hệ xác nhận đơn hàng.
                     </p>
@@ -96,6 +99,7 @@
                             })
                         ">
                         @csrf
+                        <input type="hidden" name="type" value="order">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-semibold mb-1 text-gray-700">Họ và tên <span
@@ -175,7 +179,7 @@
     <nav class="bg-gradient-to-r from-cyan-900 to-teal-700 text-white text-sm font-semibold uppercase tracking-wide">
         <div class="max-w-7xl mx-auto px-4">
             <ul class="hidden lg:flex items-center justify-end py-2 space-x-7">
-                <li><a wire:navigate href="{{ route('home') }}" class="hover:text-yellow-300 transition">Trang
+                <li><a href="{{ route('home') }}" class="hover:text-yellow-300 transition">Trang
                         chủ</a></li>
 
                 {{-- ====================== SẢN PHẨM CÁ GIỐNG ====================== --}}

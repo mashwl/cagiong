@@ -110,7 +110,7 @@
                             ">
 
                             @csrf
-
+                            <input type="hidden" name="type" value="order">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">

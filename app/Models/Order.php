@@ -31,6 +31,7 @@ class Order extends Model
         'status',
         'subscribe',
         'sanphamphu_id',
+        'type',
     ];
 
     /**

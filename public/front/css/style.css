@@ -827,6 +827,58 @@
 .testimonial .owl-carousel.testimonial-carousel .owl-nav .owl-next:hover {
     color: var(--bs-secondary);
 }
+.testimonial-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #15b990;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.testimonial-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Nội dung phù hợp hơn trên mobile */
+.testimonial-content {
+    border-radius: 12px;
+    background: var(--bs-light);
+}
+
+.testimonial-text {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Giảm khoảng cách trên giao diện mobile */
+@media (max-width: 576px) {
+    .testimonial-item {
+        padding: 0 10px;
+    }
+
+    .testimonial-content {
+        margin-bottom: 1.2rem !important;
+        padding: 16px;
+    }
+
+    .testimonial-avatar {
+        width: 65px;
+        height: 65px;
+    }
+
+    .testimonial-text {
+        font-size: 0.9rem;
+    }
+
+    .testimonial .owl-nav {
+        top: -40px; /* nâng nav lên một chút */
+    }
+}
+
 /*** testimonial end ***/
 
 
@@ -930,30 +982,29 @@
 
 
 /*** Footer Start ***/
+
 .footer {
-    background: var(--bs-primary);
+    background: #F4F6F7 !important; /* nền sáng giống ảnh */
 }
+
 .footer .footer-item a {
     line-height: 30px;
-    color: var(--bs-white);
+    color: #000000 !important; /* chữ đen */
     transition: 0.5s;
 }
 
 .footer .footer-item p {
     line-height: 30px;
+    color: #000000 !important; /* text đen */
 }
 
 .footer .footer-item a:hover {
-    letter-spacing: 2px;
-    color: var(--bs-secondary);
+    letter-spacing: 1px;
+    color: red !important; /* 🔥 Hover màu đỏ */
 }
 
-/*** Footer End ***/
-
-
-/*** copyright Start ***/
+/*** COPYRIGHT ***/
 .copyright {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    background: var(--bs-secondary) !important;
+background: linear-gradient(to right, #1F5E73, #1F8096) !important;
+border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
-/*** copyright end ***/

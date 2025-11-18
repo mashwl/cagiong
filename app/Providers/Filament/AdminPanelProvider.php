@@ -32,7 +32,13 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('quantri')
             ->authGuard('admin')
+            ->navigationGroups([
+                'Sản Phẩm',
+                'Bài Đăng',
+                'Cài Đặt',
+            ])
             ->databaseNotifications()
+            ->databaseNotificationsPolling('10s')
              ->plugins([
             Blog::make()
                 ])

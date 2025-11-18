@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Category;
 use App\Models\FeaturedProduct;
 use App\Models\Product;
+use Firefly\FilamentBlog\Facades\SEOMeta;
 use App\Models\Seeding;
 use Firefly\FilamentBlog\Models\Post;
 use Firefly\FilamentBlog\Models\Setting;
@@ -17,7 +18,7 @@ class Home extends Component
         $posts = Post::all();
         $seedings = Seeding::all();
         $setting = Setting::first();
- 
+        SEOMeta::setTitle($setting?->title ?? 'Cá Giống Linh Nam');
 
         // Lấy featured product, eager load categories cho products & sanphamphu
         $featured = FeaturedProduct::with([

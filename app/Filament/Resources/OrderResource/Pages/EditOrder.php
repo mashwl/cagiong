@@ -13,7 +13,14 @@ class EditOrder extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            // \Filament\Actions\Action::make('reset_all')
+            //     ->label('Xóa')
+            //     ->color('danger')
+            //     ->icon('heroicon-o-trash')
+            //     ->requiresConfirmation()
+            //     ->action(function () {
+            //         \App\Models\Order::truncate();  
+            //     })
         ];
     }
     protected function getRedirectUrl(): string

@@ -48,6 +48,7 @@
                 class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
 
                 @csrf
+                <input type="hidden" name="type" value="order">
                 <input type="hidden"
                     name="{{ $product instanceof \App\Models\Sanphamphu ? 'sanphamphu_id' : 'product_id' }}"
                     value="{{ $product->id }}">
